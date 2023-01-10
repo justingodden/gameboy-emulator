@@ -1,0 +1,8 @@
+bin
+roms
+docs
+.vscode
+.idea
+*.gch
+*.out
+*.gb
