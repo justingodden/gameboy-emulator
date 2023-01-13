@@ -7,7 +7,7 @@
 Cart::Cart(std::string romPath)
     : romPath(romPath)
 {
-    std::fill(romData.begin(), romData.end(), 0);
+    std::fill(rom.begin(), rom.end(), 0);
     loadRom();
     if (!headerChecksum())
     {
@@ -28,13 +28,13 @@ void Cart::loadRom()
 
     for (long i = 0; i < buffer.size(); i++)
     {
-        romData[i] = buffer[i];
+        rom[i] = buffer[i];
     }
 }
 
 void Cart::setRomBankMode()
 {
-    switch (romData[0x174])
+    switch (rom[0x174])
     {
     case 1:
         MBC1 = true;
@@ -61,26 +61,26 @@ bool Cart::headerChecksum()
     uint8_t checksum = 0;
     for (uint16_t address = 0x0134; address <= 0x014C; address++)
     {
-        checksum = checksum - romData[address] - 1;
+        checksum = checksum - rom[address] - 1;
     }
 
-    return (checksum & 0xFF) == romData[0x14D];
+    return (checksum & 0xFF) == rom[0x14D];
 }
 
 void Cart::printCartHeader()
 {
     std::cout << "Title: ";
-    for (uint16_t i = 0x0134; i <= 0x0143; i++)
+    for (uint16_t i = 0x0134; i <= 0x0142; i++)
     {
-        std::cout << romData[i];
+        std::cout << rom[i];
     }
     std::cout << "\n";
 
     std::cout << "Licencee Code: ";
-    if (romData[0x014B] == 0x33)
+    if (rom[0x014B] == 0x33)
     {
-        const char char1 = romData[0x0144];
-        const char char2 = romData[0x0145];
+        const char char1 = rom[0x0144];
+        const char char2 = rom[0x0145];
         std::string code = "";
         code += char1;
         code += char2;
@@ -88,6 +88,21 @@ void Cart::printCartHeader()
     }
     else
     {
-        std::cout << oldLicenceeCode[romData[0x014B]] << std::endl;
+        std::cout << oldLicenceeCode[rom[0x014B]] << std::endl;
     }
+}
+
+uint8_t Cart::readRomByte(uint16_t addr) const
+{
+    return rom[addr];
+}
+
+uint8_t Cart::readSRamByte(uint16_t addr) const
+{
+    return sRam[addr];
+}
+
+void Cart::writeSRamByte(uint16_t addr, uint8_t data)
+{
+    sRam[addr] = data;
 }

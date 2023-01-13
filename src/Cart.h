@@ -13,6 +13,9 @@ public:
 
 public:
     void printCartHeader();
+    uint8_t readRomByte(uint16_t addr) const;
+    uint8_t readSRamByte(uint16_t addr) const;
+    void writeSRamByte(uint16_t addr, uint8_t data);
 
 private:
     void loadRom();
@@ -20,7 +23,8 @@ private:
     bool headerChecksum();
 
 public:
-    std::array<uint8_t, 0x200000> romData;
+    std::array<uint8_t, 0x200000> rom;
+    std::array<uint8_t, 0x2000> sRam;
     bool MBC1 = false;
     bool MBC2 = false;
     uint8_t currentRomBank = 1; // which rom bank is loaded into 0x4000-0x7FFF

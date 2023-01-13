@@ -1,17 +1,21 @@
 #include "Gameboy.h"
+#include "Joypad.h"
 #include "Ppu.h"
 
 Gameboy::Gameboy(Cart *cart)
     : cart(cart)
 {
     Cpu *cpu = new Cpu;
-    Bus *bus = new Bus;
     Ppu *ppu = new Ppu;
+    Joypad *joypad = new Joypad;
+
+    Bus *bus = new Bus(cart, cpu, joypad, ppu);
 }
 
 Gameboy::~Gameboy()
 {
     delete cpu;
-    delete bus;
     delete ppu;
+    delete joypad;
+    delete bus;
 }
