@@ -37,3 +37,18 @@ void Cpu::writeHRam(uint16_t addr, uint8_t data)
 {
     hRam[addr] = data;
 }
+
+uint16_t Cpu::executeNextOpcode()
+{
+    return 1;
+}
+
+void Cpu::setPc(uint16_t addr)
+{
+    PC = addr;
+}
+
+uint16_t Cpu::getPc()
+{
+    return PC;
+}
