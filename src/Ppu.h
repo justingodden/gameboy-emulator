@@ -12,6 +12,7 @@ public:
 public:
     uint8_t readByte(uint16_t addr) const;
     void writeByte(uint16_t addr, uint8_t data);
+    void update(unsigned int cycles);
 
 private:
     std::array<uint8_t, 0x2000> vRam;
