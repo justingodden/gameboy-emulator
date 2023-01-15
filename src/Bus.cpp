@@ -1,7 +1,7 @@
 #include "Bus.h"
 
-Bus::Bus(Cart *cart, Cpu *cpu, Joypad *joypad, Ppu *ppu)
-    : cart(cart), cpu(cpu), joypad(joypad), ppu(ppu)
+Bus::Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Ppu *ppu, Timer *timer)
+    : cart(cart), cpu(cpu), interrupts(interrupts), joypad(joypad), ppu(ppu), timer(timer)
 {
 }
 
@@ -69,6 +69,10 @@ uint8_t Bus::readByte(uint16_t addr) const
     // serial transfer 0xFF01 - 0xFF02
 
     // timer and divider 0xFF04 - 0xFF07
+    else if ((0xFF04 <= addr) && (addr <= 0xFF07))
+    {
+        return timer->readByte(addr);
+    }
 
     // audio 0xFF10 - 0xFF26
 
@@ -158,6 +162,10 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // serial transfer 0xFF01 - 0xFF02
 
     // timer and divider 0xFF04 - 0xFF07
+    else if ((0xFF04 <= addr) && (addr <= 0xFF07))
+    {
+        return timer->writeByte(addr, data);
+    }
 
     // audio 0xFF10 - 0xFF26
 

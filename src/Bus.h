@@ -3,13 +3,15 @@
 #include <stdint.h>
 #include "Cart.h"
 #include "Cpu.h"
+#include "Interrupts.h"
 #include "Joypad.h"
 #include "Ppu.h"
+#include "Timer.h"
 
 class Bus
 {
 public:
-    Bus(Cart *cart, Cpu *cpu, Joypad *joypad, Ppu *ppu);
+    Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Ppu *ppu, Timer *timer);
     ~Bus();
 
 public:
@@ -19,6 +21,8 @@ public:
 private:
     Cart *cart = nullptr;
     Cpu *cpu = nullptr;
+    Interrupts *interrupts = nullptr;
     Joypad *joypad = nullptr;
     Ppu *ppu = nullptr;
+    Timer *timer = nullptr;
 };
