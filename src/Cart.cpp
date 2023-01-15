@@ -34,7 +34,7 @@ void Cart::loadRom()
 
 void Cart::setRomBankMode()
 {
-    switch (rom[0x174])
+    switch (rom[0x147])
     {
     case 1:
         MBC1 = true;
@@ -90,6 +90,11 @@ void Cart::printCartHeader()
     {
         std::cout << oldLicenceeCode[rom[0x014B]] << std::endl;
     }
+
+    std::cout << "Rom Bank Mode ";
+    std::cout << std::hex << unsigned(rom[0x147]);
+    std::cout << ": ";
+    std::cout << memBankMode[rom[0x147]] << std::endl;
 }
 
 uint8_t Cart::readRomByte(uint16_t addr) const
