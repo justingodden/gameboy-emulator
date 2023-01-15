@@ -18,3 +18,7 @@ void Ppu::writeByte(uint16_t addr, uint8_t data)
 {
     vRam[addr] = data;
 }
+
+void Ppu::update(unsigned int cycles)
+{
+}

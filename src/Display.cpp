@@ -7,3 +7,7 @@ Display::Display()
 Display::~Display()
 {
 }
+
+void Display::update()
+{
+}
