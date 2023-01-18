@@ -10,22 +10,22 @@ Memory::~Memory()
 {
 }
 
-uint8_t Memory::readWRam(uint16_t addr)
+uint8_t Memory::readWRamByte(uint16_t addr)
 {
     return wRam[addr];
 }
 
-void Memory::writeWRam(uint16_t addr, uint8_t data)
+void Memory::writeWRamByte(uint16_t addr, uint8_t data)
 {
     wRam[addr] = data;
 }
 
-uint8_t Memory::readHRam(uint16_t addr)
+uint8_t Memory::readHRamByte(uint16_t addr)
 {
     return hRam[addr];
 }
 
-void Memory::writeHRam(uint16_t addr, uint8_t data)
+void Memory::writeHRamByte(uint16_t addr, uint8_t data)
 {
     hRam[addr] = data;
 }
