@@ -2,17 +2,17 @@
 
 #include <stdint.h>
 #include "Cart.h"
-#include "Cpu.h"
 #include "Interrupts.h"
 #include "Joypad.h"
 #include "Memory.h"
 #include "Ppu.h"
 #include "Timer.h"
 
+class Interrupts;
 class Bus
 {
 public:
-    Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer);
+    Bus(Cart *cart, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer);
     ~Bus();
 
 public:
@@ -21,7 +21,6 @@ public:
 
 private:
     Cart *cart = nullptr;
-    Cpu *cpu = nullptr;
     Interrupts *interrupts = nullptr;
     Joypad *joypad = nullptr;
     Memory *memory = nullptr;

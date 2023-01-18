@@ -1,7 +1,7 @@
 #include "Bus.h"
 
-Bus::Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer)
-    : cart(cart), cpu(cpu), interrupts(interrupts), joypad(joypad), memory(memory), ppu(ppu), timer(timer)
+Bus::Bus(Cart *cart, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer)
+    : cart(cart), interrupts(interrupts), joypad(joypad), memory(memory), ppu(ppu), timer(timer)
 {
 }
 
