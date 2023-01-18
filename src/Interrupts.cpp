@@ -19,7 +19,7 @@ void Interrupts::update()
             {
                 if (IE & (1 << i))
                 {
-                    if (IF & (i << i))
+                    if (IF & (1 << i))
                     {
                         doInterrupt(i);
                     }
@@ -34,7 +34,7 @@ void Interrupts::doInterrupt(unsigned int i)
     IME = false;
     IF &= ~(1 << i); // reset bit
 
-    cpu->stack.push(cpu->getPc());
+    cpu->pushToStack(cpu->getPc());
 
     switch (i)
     {
@@ -55,6 +55,23 @@ void Interrupts::doInterrupt(unsigned int i)
     }
 }
 
-void Interrupts::requestInterrupt()
+void Interrupts::requestInterrupt(uint8_t code)
 {
+    switch (code)
+    {
+    case 0:
+        IF |= (1 << code);
+        break;
+    case 1:
+        IF |= (1 << code);
+        break;
+    case 2:
+        IF |= (1 << code);
+        break;
+    case 4:
+        IF |= (1 << code);
+        break;
+    default:
+        break;
+    }
 }

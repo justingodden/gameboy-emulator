@@ -1,14 +1,14 @@
 #pragma once
 
-#include "Bus.h"
 #include "Cart.h"
-#include "Cpu.h"
 #include "Display.h"
-#include "Interrupts.h"
 #include "Joypad.h"
 #include "Memory.h"
 #include "Ppu.h"
 #include "Timer.h"
+#include "Bus.h"
+#include "Cpu.h"
+#include "Interrupts.h"
 
 class Gameboy
 {
@@ -20,13 +20,13 @@ public:
     void Update();
 
 private:
-    Bus *bus = nullptr;
     Cart *cart = nullptr;
-    Cpu *cpu = nullptr;
     Display *display = nullptr;
-    Interrupts *interrupts = nullptr;
     Joypad *joypad = nullptr;
     Memory *memory = nullptr;
     Ppu *ppu = nullptr;
     Timer *timer = nullptr;
+    Bus *bus = nullptr;
+    Cpu *cpu = nullptr;
+    Interrupts *interrupts = nullptr;
 };

@@ -3,27 +3,27 @@
 Gameboy::Gameboy(Cart *cart)
     : cart(cart)
 {
-    Cpu *cpu = new Cpu;
     Display *display = new Display;
-    Interrupts *interrupts = new Interrupts(cpu);
     Joypad *joypad = new Joypad;
-    Ppu *ppu = new Ppu;
     Memory *memory = new Memory;
+    Ppu *ppu = new Ppu;
     Timer *timer = new Timer;
 
-    Bus *bus = new Bus(cart, cpu, interrupts, joypad, memory, ppu, timer);
+    Bus *bus = new Bus(cart, interrupts, joypad, memory, ppu, timer);
+    Cpu *cpu = new Cpu(bus);
+    Interrupts *interrupts = new Interrupts(cpu);
 }
 
 Gameboy::~Gameboy()
 {
-    delete cpu;
     delete display;
-    delete interrupts;
     delete joypad;
     delete memory;
     delete ppu;
     delete timer;
     delete bus;
+    delete cpu;
+    delete interrupts;
 }
 
 void Gameboy::Update()
@@ -35,7 +35,13 @@ void Gameboy::Update()
     {
         unsigned int cycles = cpu->executeNextOpcode();
         cyclesThisUpdate += cycles;
-        timer->update(cycles);
+
+        uint8_t interruptCode = timer->update(cycles);
+        if (interruptCode == 2)
+        {
+            interrupts->requestInterrupt(2);
+        }
+
         ppu->update(cycles);
         interrupts->update();
     }

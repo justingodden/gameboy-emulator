@@ -3,6 +3,8 @@
 #include "stdint.h"
 #include "Cpu.h"
 
+class Cpu;
+
 class Interrupts
 {
 public:
@@ -11,7 +13,7 @@ public:
 
 public:
     void update();
-    void requestInterrupt();
+    void requestInterrupt(uint8_t code);
 
 private:
     void doInterrupt(unsigned int i);
