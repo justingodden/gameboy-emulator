@@ -9,12 +9,12 @@ Ppu::~Ppu()
 {
 }
 
-uint8_t Ppu::readByte(uint16_t addr) const
+uint8_t Ppu::readVRamByte(uint16_t addr) const
 {
     return vRam[addr];
 }
 
-void Ppu::writeByte(uint16_t addr, uint8_t data)
+void Ppu::writeVRamByte(uint16_t addr, uint8_t data)
 {
     vRam[addr] = data;
 }

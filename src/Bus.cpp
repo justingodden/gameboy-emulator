@@ -26,7 +26,7 @@ uint8_t Bus::readByte(uint16_t addr) const
     // 8k VRAM
     else if (addr < 0xA000)
     {
-        return ppu->readByte(addr - 0x8000);
+        return ppu->readVRamByte(addr - 0x8000);
     }
 
     // external cart sRam
@@ -38,13 +38,13 @@ uint8_t Bus::readByte(uint16_t addr) const
     // work ram
     else if (addr < 0xE000)
     {
-        return memory->readWRam(addr - 0xC000);
+        return memory->readWRamByte(addr - 0xC000);
     }
 
     // ECHO ram
     else if (addr < 0xFE00)
     {
-        return memory->readWRam(addr - 0xE000);
+        return memory->readWRamByte(addr - 0xE000);
     }
 
     // sprite attribute table (OAM)
@@ -93,7 +93,7 @@ uint8_t Bus::readByte(uint16_t addr) const
     // hram
     else if ((0xFF80 <= addr) && (addr <= 0xFFFE))
     {
-        return memory->readHRam(addr);
+        return memory->readHRamByte(addr - 0xFF80);
     }
 
     // interrupt enable register
@@ -107,7 +107,7 @@ uint8_t Bus::readByte(uint16_t addr) const
 
 void Bus::writeByte(uint16_t addr, uint8_t data)
 {
-    // Not allowed - read-only memory
+    // rom banking TODO
     if (addr < 0x8000)
     {
     }
@@ -115,7 +115,7 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // 8k VRAM
     else if (addr < 0xA000)
     {
-        ppu->writeByte(addr + 0x8000, data);
+        ppu->writeVRamByte(addr - 0x8000, data);
     }
 
     // external cart sRam
@@ -124,22 +124,17 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
         cart->writeSRamByte(addr - 0xA000, data);
     }
 
-    // external cart sRam
-    else if (addr < 0xC000)
-    {
-        return cart->writeSRamByte(addr - 0xA000, data);
-    }
-
     // work ram
     else if (addr < 0xE000)
     {
-        return memory->writeWRam(addr - 0xC000, data);
+        memory->writeWRamByte(addr - 0xC000, data);
     }
 
     // ECHO ram
     else if (addr < 0xFE00)
     {
-        return memory->writeWRam(addr - 0xE000, data);
+        memory->writeWRamByte(addr - 0xC000, data);
+        memory->writeWRamByte(addr - 0xE000, data);
     }
 
     // sprite attribute table (OAM)
@@ -171,9 +166,9 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
 
     // wave pattern 0xFF30 - 0xFF3F
 
-    // LCD control, status, position, scrolling, palettes 0xFF40 - 0x4B
+    // LCD control, status, position, scrolling, palettes 0xFF40 - 0xFF4B
 
-    // vram bank select 0xFF4F
+    // vram bank select 0xFF4F - CGB only?
 
     // disable boot room 0xFF50
 
@@ -186,7 +181,7 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // hram
     else if ((0xFF80 <= addr) && (addr <= 0xFFFE))
     {
-        memory->writeHRam(addr, data);
+        memory->writeHRamByte(addr - 0xFF80, data);
     }
 
     // interrupt enable register
