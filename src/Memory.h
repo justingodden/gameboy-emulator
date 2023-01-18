@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <stack>
 #include <stdint.h>
 
 class Memory
@@ -20,5 +19,4 @@ public:
 private:
     std::array<uint8_t, 0x2000> wRam;            // work ram
     std::array<uint8_t, (0xFFFF - 0xFF80)> hRam; // high ram
-    std::stack<uint16_t> stack;
 };

@@ -1,13 +1,14 @@
 #pragma once
 
-#include <stack>
-#include "Cart.h"
+#include "Bus.h"
 #include "Register.h"
+
+class Bus;
 
 class Cpu
 {
 public:
-    Cpu();
+    Cpu(Bus *bus);
     ~Cpu();
 
 public:
@@ -16,17 +17,32 @@ public:
     void setPc(uint16_t addr);
     uint16_t getPc();
 
-public:
-    std::stack<uint16_t> stack;
+    void pushToStack(uint8_t data);
+    uint8_t popFromStack();
 
 private:
-    Cart *cart = nullptr;
+    uint16_t getAF();
+    uint16_t getBC();
+    uint16_t getDE();
+    uint16_t getHL();
 
-    Register *AF = nullptr;
-    Register *BC = nullptr;
-    Register *DE = nullptr;
-    Register *HL = nullptr;
+    bool getFlagZ();
+    bool getFlagN();
+    bool getFlagH();
+    bool getFlagC();
 
-    uint16_t PC;
+private:
+    uint8_t regA;
+    uint8_t regF;
+    uint8_t regB;
+    uint8_t regC;
+    uint8_t regD;
+    uint8_t regE;
+    uint8_t regH;
+    uint8_t regL;
+
+    uint16_t PC = 0x0100;
+    uint16_t SP = 0xFFFE;
+    Bus *bus = nullptr;
     // uint8_t currentRamBank = 0;
 };
