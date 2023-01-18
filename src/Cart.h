@@ -24,10 +24,11 @@ private:
 
 public:
     std::array<uint8_t, 0x200000> rom;
-    std::array<uint8_t, 0x2000> sRam;
+    std::array<uint8_t, 0x2000> sRam; // or 0x8000?
     bool MBC1 = false;
     bool MBC2 = false;
     uint8_t currentRomBank = 1; // which rom bank is loaded into 0x4000-0x7FFF
+    uint8_t currentRamBank = 0;
 
 private:
     std::string romPath;
