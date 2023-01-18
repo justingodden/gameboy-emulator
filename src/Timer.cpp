@@ -8,13 +8,32 @@ Timer::~Timer()
 {
 }
 
-void Timer::update(unsigned int cycles)
+uint8_t Timer::update(unsigned int cycles)
 {
     updateDividers(cycles);
 
-    if (TAC & 0b00000100)
+    if (TAC & 0b00000100) // clock-enabled flag
     {
+        timerCounter += cycles;
+
+        if (timerCounter >= timerSpeed)
+        {
+            timerCounter = 0;
+            setTimerSpeed();
+
+            if (TIMA > 255)
+            {
+                TIMA = TMA;
+                return 2; // timer interrupt request 2
+            }
+            else
+            {
+                TIMA++;
+            }
+        }
     }
+
+    return 0;
 }
 
 void Timer::updateDividers(unsigned int cycles)
@@ -23,8 +42,33 @@ void Timer::updateDividers(unsigned int cycles)
 
     if (divCounter > 255)
     {
-        DIV += cycles;
+        DIV++;
         divCounter = 0; // or is it -= 256?
+    }
+}
+
+void Timer::setTimerSpeed()
+{
+    switch (TAC & 0b00000011)
+    {
+    case 0b00000000:
+        timerSpeed = 1024;
+        break;
+
+    case 0b00000001:
+        timerSpeed = 16;
+        break;
+
+    case 0b00000010:
+        timerSpeed = 64;
+        break;
+
+    case 0b00000011:
+        timerSpeed = 256;
+        break;
+
+    default:
+        break;
     }
 }
 
@@ -45,7 +89,7 @@ uint8_t Timer::readByte(uint16_t addr)
         return TAC;
 
     default:
-        break;
+        return 0;
     }
 }
 
