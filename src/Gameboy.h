@@ -6,6 +6,7 @@
 #include "Display.h"
 #include "Interrupts.h"
 #include "Joypad.h"
+#include "Memory.h"
 #include "Ppu.h"
 #include "Timer.h"
 
@@ -25,6 +26,7 @@ private:
     Display *display = nullptr;
     Interrupts *interrupts = nullptr;
     Joypad *joypad = nullptr;
+    Memory *memory = nullptr;
     Ppu *ppu = nullptr;
     Timer *timer = nullptr;
 };

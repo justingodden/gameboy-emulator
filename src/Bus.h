@@ -5,13 +5,14 @@
 #include "Cpu.h"
 #include "Interrupts.h"
 #include "Joypad.h"
+#include "Memory.h"
 #include "Ppu.h"
 #include "Timer.h"
 
 class Bus
 {
 public:
-    Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Ppu *ppu, Timer *timer);
+    Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer);
     ~Bus();
 
 public:
@@ -23,6 +24,7 @@ private:
     Cpu *cpu = nullptr;
     Interrupts *interrupts = nullptr;
     Joypad *joypad = nullptr;
+    Memory *memory = nullptr;
     Ppu *ppu = nullptr;
     Timer *timer = nullptr;
 };

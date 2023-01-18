@@ -1,7 +1,7 @@
 #include "Bus.h"
 
-Bus::Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Ppu *ppu, Timer *timer)
-    : cart(cart), cpu(cpu), interrupts(interrupts), joypad(joypad), ppu(ppu), timer(timer)
+Bus::Bus(Cart *cart, Cpu *cpu, Interrupts *interrupts, Joypad *joypad, Memory *memory, Ppu *ppu, Timer *timer)
+    : cart(cart), cpu(cpu), interrupts(interrupts), joypad(joypad), memory(memory), ppu(ppu), timer(timer)
 {
 }
 
@@ -38,13 +38,13 @@ uint8_t Bus::readByte(uint16_t addr) const
     // work ram
     else if (addr < 0xE000)
     {
-        return cpu->readWRam(addr - 0xC000);
+        return memory->readWRam(addr - 0xC000);
     }
 
     // ECHO ram
     else if (addr < 0xFE00)
     {
-        return cpu->readWRam(addr - 0xE000);
+        return memory->readWRam(addr - 0xE000);
     }
 
     // sprite attribute table (OAM)
@@ -93,7 +93,7 @@ uint8_t Bus::readByte(uint16_t addr) const
     // hram
     else if ((0xFF80 <= addr) && (addr <= 0xFFFE))
     {
-        return cpu->readHRam(addr);
+        return memory->readHRam(addr);
     }
 
     // interrupt enable register
@@ -133,13 +133,13 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // work ram
     else if (addr < 0xE000)
     {
-        return cpu->writeWRam(addr - 0xC000, data);
+        return memory->writeWRam(addr - 0xC000, data);
     }
 
     // ECHO ram
     else if (addr < 0xFE00)
     {
-        return cpu->writeWRam(addr - 0xE000, data);
+        return memory->writeWRam(addr - 0xE000, data);
     }
 
     // sprite attribute table (OAM)
@@ -186,7 +186,7 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // hram
     else if ((0xFF80 <= addr) && (addr <= 0xFFFE))
     {
-        cpu->writeHRam(addr, data);
+        memory->writeHRam(addr, data);
     }
 
     // interrupt enable register

@@ -8,9 +8,10 @@ Gameboy::Gameboy(Cart *cart)
     Interrupts *interrupts = new Interrupts(cpu);
     Joypad *joypad = new Joypad;
     Ppu *ppu = new Ppu;
+    Memory *memory = new Memory;
     Timer *timer = new Timer;
 
-    Bus *bus = new Bus(cart, cpu, interrupts, joypad, ppu, timer);
+    Bus *bus = new Bus(cart, cpu, interrupts, joypad, memory, ppu, timer);
 }
 
 Gameboy::~Gameboy()
@@ -19,6 +20,7 @@ Gameboy::~Gameboy()
     delete display;
     delete interrupts;
     delete joypad;
+    delete memory;
     delete ppu;
     delete timer;
     delete bus;

@@ -1,6 +1,7 @@
 bin
 roms
 docs
+misc
 .vscode
 .idea
 *.gch
