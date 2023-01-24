@@ -1,7 +1,6 @@
 #include "Interrupts.h"
 
-Interrupts::Interrupts(Cpu *cpu)
-    : cpu(cpu)
+Interrupts::Interrupts()
 {
 }
 
@@ -74,4 +73,9 @@ void Interrupts::requestInterrupt(uint8_t code)
     default:
         break;
     }
+}
+
+void Interrupts::setCpu(Cpu *cpu)
+{
+    cpu = cpu;
 }

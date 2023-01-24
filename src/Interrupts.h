@@ -8,12 +8,13 @@ class Cpu;
 class Interrupts
 {
 public:
-    Interrupts(Cpu *cpu);
+    Interrupts();
     ~Interrupts();
 
 public:
     void update();
     void requestInterrupt(uint8_t code);
+    void setCpu(Cpu *cpu);
 
 private:
     void doInterrupt(unsigned int i);
