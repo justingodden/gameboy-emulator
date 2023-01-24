@@ -78,7 +78,11 @@ uint8_t Bus::readByte(uint16_t addr) const
 
     // wave pattern 0xFF30 - 0xFF3F
 
-    // LCD control, status, position, scrolling, palettes 0xFF40 - 0x4B
+    // LCD control, status, position, scrolling, palettes 0xFF40 - 0xFF4B
+    else if ((0xFF40 <= addr) && (addr <= 0xFF4B))
+    {
+        return ppu->readLcdByte(addr);
+    }
 
     // vram bank select 0xFF4F
 
@@ -151,7 +155,7 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // joypad
     else if (addr == 0xFF00)
     {
-        return joypad->writeByte(data);
+        joypad->writeByte(data);
     }
 
     // serial transfer 0xFF01 - 0xFF02
@@ -159,7 +163,7 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // timer and divider 0xFF04 - 0xFF07
     else if ((0xFF04 <= addr) && (addr <= 0xFF07))
     {
-        return timer->writeByte(addr, data);
+        timer->writeByte(addr, data);
     }
 
     // audio 0xFF10 - 0xFF26
@@ -167,6 +171,10 @@ void Bus::writeByte(uint16_t addr, uint8_t data)
     // wave pattern 0xFF30 - 0xFF3F
 
     // LCD control, status, position, scrolling, palettes 0xFF40 - 0xFF4B
+    else if ((0xFF40 <= addr) && (addr <= 0xFF4B))
+    {
+        ppu->writeLcdByte(addr, data);
+    }
 
     // vram bank select 0xFF4F - CGB only?
 

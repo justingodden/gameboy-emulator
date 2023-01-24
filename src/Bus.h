@@ -9,6 +9,9 @@
 #include "Timer.h"
 
 class Interrupts;
+class Ppu;
+class Timer;
+
 class Bus
 {
 public:
