@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include "Interrupts.h"
 
 class Timer
 {
@@ -9,9 +10,11 @@ public:
     ~Timer();
 
 public:
-    uint8_t update(unsigned int cycles);
+    void update(unsigned int cycles);
     uint8_t readByte(uint16_t addr);
     void writeByte(uint16_t addr, uint8_t data);
+
+    void setInterrupts(Interrupts *interrupts);
 
 private:
     void updateDividers(unsigned int cycles);
@@ -26,4 +29,6 @@ private:
     uint16_t timerCounter = 0;
     uint16_t divCounter = 0;
     uint32_t timerSpeed = 1024;
+
+    Interrupts *interrupts = nullptr;
 };

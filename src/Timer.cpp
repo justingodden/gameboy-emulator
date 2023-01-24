@@ -8,7 +8,12 @@ Timer::~Timer()
 {
 }
 
-uint8_t Timer::update(unsigned int cycles)
+void Timer::setInterrupts(Interrupts *interrupts)
+{
+    interrupts = interrupts;
+}
+
+void Timer::update(unsigned int cycles)
 {
     updateDividers(cycles);
 
@@ -24,7 +29,7 @@ uint8_t Timer::update(unsigned int cycles)
             if (TIMA > 255)
             {
                 TIMA = TMA;
-                return 2; // timer interrupt request 2
+                interrupts->requestInterrupt(2);
             }
             else
             {
@@ -32,8 +37,6 @@ uint8_t Timer::update(unsigned int cycles)
             }
         }
     }
-
-    return 0;
 }
 
 void Timer::updateDividers(unsigned int cycles)
