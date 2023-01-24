@@ -1,7 +1,6 @@
 #include "Cpu.h"
 
-Cpu::Cpu(Bus *bus)
-    : bus(bus)
+Cpu::Cpu()
 {
 }
 
@@ -73,4 +72,9 @@ bool Cpu::getFlagH()
 bool Cpu::getFlagC()
 {
     return (regF & (1 << 4) > 0);
+}
+
+void Cpu::setBus(Bus *bus)
+{
+    bus = bus;
 }

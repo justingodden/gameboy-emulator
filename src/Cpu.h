@@ -8,7 +8,7 @@ class Bus;
 class Cpu
 {
 public:
-    Cpu(Bus *bus);
+    Cpu();
     ~Cpu();
 
 public:
@@ -19,6 +19,8 @@ public:
 
     void pushToStack(uint8_t data);
     uint8_t popFromStack();
+
+    void setBus(Bus *bus);
 
 private:
     uint16_t getAF();
