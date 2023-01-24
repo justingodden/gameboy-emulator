@@ -47,5 +47,5 @@ void Gameboy::Update()
         interrupts->update();
     }
 
-    display->update();
+    display->update(ppu->getScreenData());
 }

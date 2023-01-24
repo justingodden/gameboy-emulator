@@ -30,6 +30,7 @@ public:
     void writeLcdByte(uint16_t addr, uint8_t data);
 
     void update(unsigned int cycles);
+    std::array<uint8_t, 160 * 144 * 4> getScreenData();
 
     void setBus(Bus *bus);
     void setInterrupts(Interrupts *interrupts);

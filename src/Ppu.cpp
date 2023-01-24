@@ -19,6 +19,11 @@ void Ppu::setInterrupts(Interrupts *interrupts)
     interrupts = interrupts;
 }
 
+std::array<uint8_t, 160 * 144 * 4> Ppu::getScreenData()
+{
+    return screenData;
+}
+
 uint8_t Ppu::readVRamByte(uint16_t addr) const
 {
     return vRam[addr];
