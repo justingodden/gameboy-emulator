@@ -10,8 +10,14 @@ Gameboy::Gameboy(Cart *cart)
     Timer *timer = new Timer;
 
     Bus *bus = new Bus(cart, interrupts, joypad, memory, ppu, timer);
-    Cpu *cpu = new Cpu(bus);
-    Interrupts *interrupts = new Interrupts(cpu);
+    Cpu *cpu = new Cpu;
+    Interrupts *interrupts = new Interrupts;
+
+    cpu->setBus(bus);
+    interrupts->setCpu(cpu);
+    ppu->setBus(bus);
+    ppu->setInterrupts(interrupts);
+    timer->setInterrupts(interrupts);
 }
 
 Gameboy::~Gameboy()
@@ -36,12 +42,7 @@ void Gameboy::Update()
         unsigned int cycles = cpu->executeNextOpcode();
         cyclesThisUpdate += cycles;
 
-        uint8_t interruptCode = timer->update(cycles);
-        if (interruptCode == 2)
-        {
-            interrupts->requestInterrupt(2);
-        }
-
+        timer->update(cycles);
         ppu->update(cycles);
         interrupts->update();
     }
